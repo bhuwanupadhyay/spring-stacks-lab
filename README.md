@@ -1,2 +1,2 @@
-# Spring Stacks Lab
+# Tutorials
 
