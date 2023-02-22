@@ -1,0 +1,51 @@
+---
+version: '3'
+
+vars: {}
+
+tasks:
+  all:
+    desc: Install Tools
+    cmds:
+      - echo "Installing necessary tools"
+    deps:
+      - pre-commit
+      - node
+      - gradle
+      - java
+
+  pre-commit:
+    desc: Install Pre-commit
+    cmds:
+      - echo "Installing pre-commit"
+      - 'python3 -m pip install --user pre-commit'
+    status:
+      - type pre-commit
+    silent: true
+
+  node:
+    desc: Install Node
+    cmds:
+      - echo "Installing nodejs"
+      - nvm install lts
+    status:
+      - type node
+    silent: true
+
+  gradle:
+    desc: Install Gradle
+    cmds:
+      - echo "Installing gradle"
+      - sdk install gradle
+    status:
+      - type gradle
+    silent: true
+
+  java:
+    desc: Install Java
+    cmds:
+      - echo "Installing gradle"
+      - sdk install gradle
+    status:
+      - type java
+    silent: true

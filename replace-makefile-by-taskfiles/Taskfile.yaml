@@ -1,0 +1,13 @@
+---
+version: '3'
+
+includes:
+  tools: ./.taskfiles/tools.yaml
+  frontend: ./.taskfiles/frontend.yaml
+  backend: ./.taskfiles/backend.yaml
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true

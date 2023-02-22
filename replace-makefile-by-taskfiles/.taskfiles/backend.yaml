@@ -1,0 +1,19 @@
+---
+version: '3'
+
+vars:
+  SRC_ROOT:
+    sh: 'pwd'
+
+tasks:
+  test:
+    dir: '{{.SRC_ROOT}}/backend'
+    desc: Build and run tests
+    cmds:
+      - ./gradlew clean test
+
+  dev:
+    dir: '{{.SRC_ROOT}}/backend'
+    desc: Start backend development server
+    cmds:
+      - ./gradlew bootRun

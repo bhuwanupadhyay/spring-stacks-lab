@@ -1,0 +1,19 @@
+---
+version: '3'
+
+vars:
+  SRC_ROOT:
+    sh: 'pwd'
+
+tasks:
+  install:
+    dir: '{{.SRC_ROOT}}/frontend'
+    desc: Install npm dependencies
+    cmds:
+      - npm install
+
+  dev:
+    dir: '{{.SRC_ROOT}}/frontend'
+    desc: Start development server
+    cmds:
+      - npm run start
