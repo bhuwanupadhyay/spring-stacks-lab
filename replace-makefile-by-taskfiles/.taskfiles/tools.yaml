@@ -45,7 +45,7 @@ tasks:
     desc: Install Java
     cmds:
       - echo "Installing gradle"
-      - sdk install gradle
+      - sdk install java
     status:
       - type java
     silent: true
