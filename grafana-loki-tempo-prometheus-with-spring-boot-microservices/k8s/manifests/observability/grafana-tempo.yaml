@@ -1,0 +1,12 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: tempo
+  namespace: helm-controller
+spec:
+  chart: tempo
+  repo: https://grafana.github.io/helm-charts
+  version: 1.0.0
+  targetNamespace: observability
+  valuesContent: |-

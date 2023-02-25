@@ -28,3 +28,4 @@ yarn.lock
 build/
 out/
 target/
+*.pem

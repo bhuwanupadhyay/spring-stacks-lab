@@ -1,0 +1,26 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: nginx-ingress
+  namespace: helm-controller
+spec:
+  chart: ingress-nginx
+  repo: https://kubernetes.github.io/ingress-nginx
+  version: 4.5.2
+  targetNamespace: kube-system
+  valuesContent: |-
+    rbac:
+      create: "true"
+    defaultBackend:
+      enabled: "true"
+    controller:
+      service:
+        type: "LoadBalancer"
+        externalTrafficPolicy: "Local"
+      config:
+        ssl-redirect: "true"
+        force-ssl-redirect: "true"
+      watchIngressWithoutClass: "true"
+      extraArgs:
+        default-ssl-certificate: "kube-system/ingress-certs"

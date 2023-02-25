@@ -1,0 +1,16 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: loki
+  namespace: helm-controller
+spec:
+  chart: loki
+  repo: https://grafana.github.io/helm-charts
+  version: 4.7.0
+  targetNamespace: observability
+  valuesContent: |-
+    write:
+      replicas: 1
+    read:
+      replicas: 1
