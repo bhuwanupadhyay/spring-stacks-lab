@@ -24,17 +24,12 @@ for ns in kube-system auth-system; do
     kubectl create namespace $ns
   fi
 
-  # create secret if not exists
-  if kubectl get secret $SECRET_NAME -n $ns >/dev/null 2>&1; then
-    echo "Secret $SECRET_NAME already exists"
-  else
-    kubectl create secret tls ingress-certs \
-      --key $DOMAIN+1-key.pem \
-      --cert $DOMAIN+1.pem \
-      --namespace $ns \
-      --dry-run=client \
-      -o yaml | kubectl apply -f -
-  fi
+  kubectl create secret tls $SECRET_NAME \
+    --key $DOMAIN+1-key.pem \
+    --cert $DOMAIN+1.pem \
+    --namespace $ns \
+    --dry-run=client \
+    -o yaml | kubectl apply -f -
 
 done
 

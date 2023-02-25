@@ -12,13 +12,7 @@ spring init --dependencies=webflux,data-jpa,actuator,devtools payments
 spring init --dependencies=gateway,actuator,devtools shippings
 ```
 
-## Mac OS
-
-* Install dnsmasq
-
-```bash
-brew install dnsmasq
-```
+## Mac OSX
 
 * Get the LoadBalancer IP address of the `nginx-ingress` service:
 
@@ -27,34 +21,26 @@ export LB_IP=$(kubectl get svc/nginx-ingress-ingress-nginx-controller -n kube-sy
 echo "Your LoadBalancer IP is: $LB_IP"
 ```
 
-* Append the following line to the `dnsmasq.conf` file:
+* Add the following line to the `/etc/hosts` file:
+
+- Grafana
 
 ```bash
-echo "address=/.localdev/$LB_IP" >> /opt/homebrew/etc/dnsmasq.conf
+echo "$LB_IP grafana.k8s.localdev" | sudo tee -a /etc/hosts
 ```
 
-* To start the `dnsmasq` service:
+- https://grafana.k8s.localdev
+
+### Special Note for Mac OSX
+
+* Unlock `/etc/hosts` file if it is locked in macOS:
 
 ```bash
-brew services start dnsmasq
+sudo chflags nouchg /etc/hosts && sudo chflags noschg /etc/hosts
 ```
 
-if failed, try:
+* Lock `/etc/hosts` file
 
 ```bash
-brew services restart dnsmasq
-```
-
-* Add the following line to the `/etc/resolver/localdev` file:
-
-```bash
-sudo mkdir -p /etc/resolver
-echo "nameserver $LB_IP" | sudo tee /etc/resolver/localdev
-cat /etc/resolver/localdev
-```
-
-* To verify the configuration, run the following command:
-
-```bash
-ping orders.k8s.localdev
+sudo chflags uchg /etc/hosts && sudo chflags schg /etc/hosts
 ```
