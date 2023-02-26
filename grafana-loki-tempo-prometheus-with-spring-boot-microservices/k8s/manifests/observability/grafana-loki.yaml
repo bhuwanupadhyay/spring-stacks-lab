@@ -5,15 +5,9 @@ metadata:
   name: loki
   namespace: helm-controller
 spec:
-  chart: loki
+  chart: loki-stack
   repo: https://grafana.github.io/helm-charts
-  version: 4.7.0
+  version: 2.9.9
   targetNamespace: observability
-  #  https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
+  # https://github.com/grafana/helm-charts/blob/main/charts/loki-stack/values.yaml
   valuesContent: |-
-    write:
-      replicas: 1
-    read:
-      replicas: 1
-    loki:
-      auth_enabled: false

@@ -8,7 +8,7 @@ spec:
   chart: ingress-nginx
   repo: https://kubernetes.github.io/ingress-nginx
   version: 4.5.2
-  targetNamespace: kube-system
+  targetNamespace: kube-addons
   valuesContent: |-
     rbac:
       create: "true"
@@ -23,4 +23,4 @@ spec:
         force-ssl-redirect: "true"
       watchIngressWithoutClass: "true"
       extraArgs:
-        default-ssl-certificate: "kube-system/ingress-certs"
+        default-ssl-certificate: "kube-addons/ingress-certs"

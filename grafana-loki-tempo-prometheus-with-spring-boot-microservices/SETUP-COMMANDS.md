@@ -22,7 +22,7 @@ spring init --dependencies=gateway,actuator,devtools shippings
 * Get the LoadBalancer IP address of the `nginx-ingress` service:
 
 ```bash
-export LB_IP=$(kubectl get svc/nginx-ingress-ingress-nginx-controller -n kube-system -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export LB_IP=$(kubectl get svc/nginx-ingress-ingress-nginx-controller -n kube-addons -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
 echo "Your LoadBalancer IP is: $LB_IP"
 ```
 
