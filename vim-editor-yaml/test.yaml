@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: helm-controller
+  labels:
+    name: helm-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helm-controller
+  namespace: helm-controller
+  labels:
+    app: helm-controller
