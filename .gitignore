@@ -29,3 +29,4 @@ build/
 out/
 target/
 *.pem
+.DS_Store
