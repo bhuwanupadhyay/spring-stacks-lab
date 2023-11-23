@@ -1,0 +1,22 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: jenkins
+  namespace: helm-controller
+spec:
+  chart: jenkins
+  repo: https://charts.jenkins.io
+  version: 4.3.29
+  targetNamespace: jenkins
+  valuesContent: |-
+    # https://github.com/jenkinsci/echo-servers/blob/main/charts/jenkins/values.yaml
+    controller:
+      ingress:
+        enabled: true
+        hostName: jenkins.k8s.localdev
+      adminUser: "admin"
+      adminPassword: "admin"
+      podDisruptionBudget:
+        enabled: true
+        maxUnavailable: 1

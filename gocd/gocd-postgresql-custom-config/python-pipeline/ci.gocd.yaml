@@ -1,0 +1,73 @@
+format_version: 10
+pipelines:
+  backendj-build:
+    group: backendj-apps
+    lock_behavior: none
+    display_order: -1
+    materials:
+      backendj:
+        git: https://github.com/bhuwanupadhyay/backendj.git
+        shallow_clone: false
+        auto_update: true
+        branch: develop
+    stages:
+      - test-and-report:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          jobs:
+            run-unit-tests:
+              timeout: 0
+              tasks:
+                - exec:
+                    arguments:
+                      - -c
+                      - |
+                        python -m unittest discover -s ./ -p "*_test.py"
+                    command: /bin/bash
+                    working_directory: gocd/gocd-postgresql-custom-config/python-pipeline
+                    run_if: passed
+      - code-analysis:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          jobs:
+            sonarqube-analysis:
+              environment_variables:
+                SONAR_HOST_URL: '{{SECRET:[default][sonarHostUrl]}}'
+                SONAR_LOGIN_TOKEN: '{{SECRET:[default][sonarLoginToken]}}'
+              timeout: 0
+              tasks:
+                - exec:
+                    arguments:
+                      - -c
+                      - |-
+                        sonar-scanner \
+                          -Dsonar.projectKey=python-pipeline \
+                          -Dsonar.sources=src \
+                          -Dsonar.language=python \
+                          -Dsonar.python.version=3.8 \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_LOGIN_TOKEN
+                    command: /bin/bash
+                    working_directory: gocd/gocd-postgresql-custom-config/python-pipeline
+                    run_if: passed
+      - build-and-publish:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          jobs:
+            run-unit-tests:
+              timeout: 0
+              tasks:
+                - exec:
+                    arguments:
+                      - -c
+                      - |
+                        echo "Build and Publish"
+                    command: /bin/bash
+                    working_directory: gocd/gocd-postgresql-custom-config/python-pipeline
+                    run_if: passed

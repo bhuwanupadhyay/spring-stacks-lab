@@ -1,0 +1,28 @@
+format_version: 10
+pipelines:
+  infra-app1:
+    group: backendj-infra
+    template: infra-exec
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      backendj-build:
+        ignore_for_scheduling: false
+        pipeline: backendj-build
+        stage: build-and-publish
+    parameters:
+      infra_component: app1
+  infra-app2:
+    group: backendj-infra
+    template: infra-exec
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      backendj-build:
+        ignore_for_scheduling: false
+        pipeline: backendj-build
+        stage: build-and-publish
+    parameters:
+      infra_component: app2

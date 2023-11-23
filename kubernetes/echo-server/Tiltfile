@@ -1,0 +1,9 @@
+allow_k8s_contexts('default')
+load('ext://namespace', 'namespace_create', 'namespace_inject')
+namespace_create('echo-server')
+k8s_yaml(helm(
+    './',
+    name='echo-server',
+    namespace='echo-server',
+    set=['ingress.enabled=true']
+))

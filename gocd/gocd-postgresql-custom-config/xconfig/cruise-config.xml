@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="139">
+    <server agentAutoRegisterKey="f8b0da76-7b1d-4b45-849d-3a117c70cb2b" webhookSecret="078e9233-328b-4f6a-83c2-2b47a915c197" serverId="92ca4f43-37c9-4c83-98fc-a35bd9782f0f" tokenGenerationKey="308b9c95-63de-4435-a8aa-46813cfc972f">
+        <artifacts>
+            <artifactsDir>artifacts</artifactsDir>
+        </artifacts>
+        <security>
+            <authConfigs>
+                <authConfig id="pwdfile" pluginId="cd.go.authentication.passwordfile">
+                    <property>
+                        <key>PasswordFilePath</key>
+                        <value>/godata/config/password.properties</value>
+                    </property>
+                </authConfig>
+            </authConfigs>
+        </security>
+    </server>
+    <artifactStores>
+        <artifactStore id="docker" pluginId="cd.go.artifact.docker.registry">
+            <property>
+                <key>RegistryType</key>
+                <value>ecr</value>
+            </property>
+            <property>
+                <key>RegistryURL</key>
+                <value />
+            </property>
+            <property>
+                <key>RegistryID</key>
+                <value />
+            </property>
+            <property>
+                <key>AWSAccessKeyId</key>
+                <encryptedValue />
+            </property>
+            <property>
+                <key>AWSSecretAccessKey</key>
+                <encryptedValue />
+            </property>
+            <property>
+                <key>AWSRegion</key>
+                <value />
+            </property>
+            <property>
+                <key>Username</key>
+                <value />
+            </property>
+            <property>
+                <key>Password</key>
+                <encryptedValue />
+            </property>
+        </artifactStore>
+        <artifactStore id="s3" pluginId="cd.go.artifact.s3">
+            <property>
+                <key>S3Bucket</key>
+                <value />
+            </property>
+            <property>
+                <key>Region</key>
+                <value />
+            </property>
+            <property>
+                <key>AWSAccessKey</key>
+                <value />
+            </property>
+            <property>
+                <key>AWSSecretAccessKey</key>
+                <encryptedValue />
+            </property>
+        </artifactStore>
+    </artifactStores>
+    <templates>
+        <pipeline name="infra-exec">
+            <stage name="command">
+                <approval type="manual" />
+                <environmentvariables>
+                    <variable name="TEST_URL">
+                        <value>https://test-url</value>
+                    </variable>
+                    <variable name="TEST_CMD">
+                        <value />
+                    </variable>
+                </environmentvariables>
+                <jobs>
+                    <job name="run">
+                        <tasks>
+                            <exec command="/bin/bash">
+                                <arg>-c</arg>
+                                <arg><![CDATA[
+          echo "This is a multiline command: $TEST_URL"
+          echo "This is your component #{infra_component}"
+        ]]></arg>
+                                <runif status="passed" />
+                            </exec>
+                        </tasks>
+                    </job>
+                </jobs>
+            </stage>
+        </pipeline>
+    </templates>
+</cruise>
